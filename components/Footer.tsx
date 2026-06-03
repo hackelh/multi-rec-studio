@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useLang } from "@/contexts/LanguageContext";
 
 const socials = [
@@ -53,49 +54,39 @@ export default function Footer() {
   ];
 
   return (
-    <footer
-      className="text-white pt-16 pb-8"
-      style={{
-        background: "linear-gradient(135deg, #020818 0%, #0c1a3a 60%, #0a0f1e 100%)",
-      }}
-    >
+    <footer className="bg-slate-950 text-white pt-16 pb-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        {/* Top section */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+        {/* Top */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-14 pb-14 border-b border-white/10">
 
           {/* Brand */}
           <div className="lg:col-span-2">
-            <div className="flex items-center gap-2.5 mb-4">
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-900 rounded-xl flex items-center justify-center shadow-lg">
-                <span className="text-white font-black">M</span>
-              </div>
-              <div>
-                <p className="font-black text-white text-lg leading-none">Multi Rec Studio</p>
-                <p className="text-blue-400 text-xs font-medium">{t.footer.tagline}</p>
-              </div>
-            </div>
+            <a href="#home" className="inline-block mb-4">
+              <Image
+                src="/Logo.png"
+                alt="Multi Rec Studio"
+                width={130}
+                height={52}
+                className="object-contain brightness-0 invert"
+              />
+            </a>
             <p className="text-slate-400 text-sm leading-relaxed max-w-xs mb-5">
-              {lang === "fr"
-                ? "Studio de production audiovisuelle premium à Laval. Concept Plug & Play pour créateurs et entreprises."
-                : "Premium audiovisual production studio in Laval. Plug & Play concept for creators and businesses."}
+              {t.footer.tagline}
             </p>
-            <div className="flex items-center gap-2 text-sm text-slate-400">
+            <div className="flex items-center gap-2 text-slate-500 text-sm">
               <span>📍</span>
               <span>Laval, Québec, Canada</span>
             </div>
           </div>
 
-          {/* Navigation */}
+          {/* Nav */}
           <div>
-            <p className="font-bold text-white text-sm mb-4 uppercase tracking-widest">{t.footer.navTitle}</p>
-            <ul className="space-y-2.5">
+            <p className="font-bold text-white text-xs mb-5 uppercase tracking-widest">{t.footer.navTitle}</p>
+            <ul className="space-y-3">
               {navLinks.map((link) => (
                 <li key={link.href}>
-                  <a
-                    href={link.href}
-                    className="text-slate-400 hover:text-white text-sm transition-colors"
-                  >
+                  <a href={link.href} className="text-slate-400 hover:text-white text-sm transition-colors">
                     {link.label}
                   </a>
                 </li>
@@ -105,35 +96,30 @@ export default function Footer() {
 
           {/* Contact + Social */}
           <div>
-            <p className="font-bold text-white text-sm mb-4 uppercase tracking-widest">{t.footer.contactTitle}</p>
-            <div className="space-y-2.5 mb-6">
-              <a
-                href="mailto:contact@multirec.studio"
-                className="flex items-center gap-2 text-slate-400 hover:text-white text-sm transition-colors group"
-              >
-                <span className="w-7 h-7 bg-white/5 rounded-lg flex items-center justify-center group-hover:bg-blue-600/30 transition-colors text-xs">
-                  ✉️
-                </span>
+            <p className="font-bold text-white text-xs mb-5 uppercase tracking-widest">{t.footer.contactTitle}</p>
+            <div className="space-y-3 mb-7">
+              <a href="mailto:contact@multirec.studio" className="flex items-center gap-2.5 text-slate-400 hover:text-white text-sm transition-colors">
+                <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
                 contact@multirec.studio
               </a>
-              <a
-                href="tel:+15140000000"
-                className="flex items-center gap-2 text-slate-400 hover:text-white text-sm transition-colors group"
-              >
-                <span className="w-7 h-7 bg-white/5 rounded-lg flex items-center justify-center group-hover:bg-blue-600/30 transition-colors text-xs">
-                  📞
-                </span>
+              <a href="tel:+15140000000" className="flex items-center gap-2.5 text-slate-400 hover:text-white text-sm transition-colors">
+                <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                </svg>
                 +1 (514) 000-0000
               </a>
             </div>
-            <p className="font-bold text-white text-sm mb-3 uppercase tracking-widest">{t.footer.followTitle}</p>
+
+            <p className="font-bold text-white text-xs mb-3 uppercase tracking-widest">{t.footer.followTitle}</p>
             <div className="flex gap-2">
               {socials.map((s) => (
                 <a
                   key={s.name}
                   href={s.href}
                   aria-label={s.name}
-                  className="w-9 h-9 bg-white/10 hover:bg-blue-600 rounded-xl flex items-center justify-center transition-all hover:scale-110"
+                  className="w-9 h-9 bg-white/5 hover:bg-white/15 rounded-xl flex items-center justify-center transition-all hover:scale-110 text-slate-400 hover:text-white"
                 >
                   {s.icon}
                 </a>
@@ -142,15 +128,15 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Divider */}
-        <div className="border-t border-white/10 pt-7 flex flex-col sm:flex-row items-center justify-between gap-4 text-slate-500 text-xs">
+        {/* Bottom */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-slate-600 text-xs">
           <p>© {year} Multi Rec Studio. {t.footer.rights}</p>
           <div className="flex gap-5">
-            <a href="#" className="hover:text-slate-300 transition-colors">
-              {lang === "fr" ? "Politique de confidentialité" : "Privacy Policy"}
+            <a href="#" className="hover:text-slate-400 transition-colors">
+              {lang === "fr" ? "Confidentialité" : "Privacy"}
             </a>
-            <a href="#" className="hover:text-slate-300 transition-colors">
-              {lang === "fr" ? "Conditions d'utilisation" : "Terms of Use"}
+            <a href="#" className="hover:text-slate-400 transition-colors">
+              {lang === "fr" ? "Conditions" : "Terms"}
             </a>
           </div>
         </div>

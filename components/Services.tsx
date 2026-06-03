@@ -1,121 +1,117 @@
 "use client";
 
+import Image from "next/image";
 import { useLang } from "@/contexts/LanguageContext";
-
-const colorMap = {
-  amber: {
-    bg: "from-amber-50 to-orange-50",
-    border: "border-amber-200",
-    icon: "bg-amber-100 text-amber-700",
-    tag: "bg-amber-100 text-amber-700",
-    btn: "bg-amber-600 hover:bg-amber-700 shadow-amber-200",
-    accent: "text-amber-600",
-  },
-  emerald: {
-    bg: "from-emerald-50 to-teal-50",
-    border: "border-emerald-200",
-    icon: "bg-emerald-100 text-emerald-700",
-    tag: "bg-emerald-100 text-emerald-700",
-    btn: "bg-emerald-600 hover:bg-emerald-700 shadow-emerald-200",
-    accent: "text-emerald-600",
-  },
-  blue: {
-    bg: "from-blue-50 to-slate-50",
-    border: "border-blue-200",
-    icon: "bg-blue-100 text-blue-700",
-    tag: "bg-blue-100 text-blue-700",
-    btn: "bg-blue-700 hover:bg-blue-800 shadow-blue-200",
-    accent: "text-blue-700",
-  },
-};
 
 export default function Services() {
   const { t } = useLang();
 
   return (
-    <section id="services" className="py-24 bg-slate-50">
+    <section id="services" className="py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        {/* Section header */}
-        <div className="text-center mb-16">
-          <span className="inline-block bg-blue-100 text-blue-700 text-xs font-bold px-4 py-1.5 rounded-full mb-4 tracking-wide uppercase">
+        {/* Header */}
+        <div className="mb-16">
+          <span className="inline-block bg-slate-100 text-slate-600 text-xs font-bold px-4 py-1.5 rounded-full mb-4 tracking-widest uppercase">
             {t.services.sectionBadge}
           </span>
-          <h2 className="text-3xl sm:text-5xl font-black text-slate-900 mb-4">
-            {t.services.title}
-          </h2>
-          <p className="text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed">
-            {t.services.subtitle}
-          </p>
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+            <h2 className="text-4xl sm:text-5xl font-black text-slate-900 leading-tight max-w-sm">
+              {t.services.title}
+            </h2>
+            <p className="text-slate-500 max-w-sm leading-relaxed text-sm sm:text-base text-right">
+              {t.services.subtitle}
+            </p>
+          </div>
         </div>
 
         {/* Studio cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-          {t.services.studios.map((studio) => {
-            const color = colorMap[studio.color as keyof typeof colorMap];
-            return (
-              <div
-                key={studio.id}
-                className={`group relative bg-gradient-to-br ${color.bg} border ${color.border} rounded-3xl p-7 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 flex flex-col`}
-              >
-                {/* Icon + mood */}
-                <div className="flex items-start justify-between mb-6">
-                  <div className={`w-14 h-14 ${color.icon} rounded-2xl flex items-center justify-center text-2xl shadow-sm`}>
-                    {studio.icon}
-                  </div>
-                  <span className={`text-xs font-semibold ${color.accent} bg-white/70 px-3 py-1.5 rounded-full border border-current/10`}>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-slate-100 rounded-3xl overflow-hidden shadow-xl">
+          {t.services.studios.map((studio, i) => (
+            <div
+              key={studio.id}
+              className="group bg-white flex flex-col hover:bg-slate-50 transition-colors duration-300"
+            >
+              {/* Photo */}
+              <div className="relative h-56 overflow-hidden">
+                <Image
+                  src={`/${studio.image}`}
+                  alt={studio.name}
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                />
+                {/* Gradient fade to white */}
+                <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent opacity-60" />
+
+                {/* Studio number */}
+                <div className="absolute top-4 left-4 w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center">
+                  <span className="text-xs font-black text-slate-900">0{i + 1}</span>
+                </div>
+
+                {/* Mood badge */}
+                <div className="absolute bottom-4 left-4 right-4">
+                  <span className="inline-block bg-white/90 backdrop-blur-sm text-slate-700 text-xs font-semibold px-3 py-1 rounded-full">
                     {studio.mood}
                   </span>
                 </div>
+              </div>
 
-                {/* Name */}
+              {/* Content */}
+              <div className="p-6 flex flex-col flex-1">
                 <h3 className="text-xl font-black text-slate-900 mb-3">{studio.name}</h3>
-
-                {/* Description */}
-                <p className="text-slate-600 text-sm leading-relaxed mb-6 flex-1">
+                <p className="text-slate-500 text-sm leading-relaxed flex-1 mb-5">
                   {studio.description}
                 </p>
 
                 {/* Tags */}
-                <div className="flex flex-wrap gap-2 mb-6">
+                <div className="flex flex-wrap gap-1.5 mb-6">
                   {studio.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className={`${color.tag} text-xs font-semibold px-3 py-1 rounded-full`}
-                    >
+                    <span key={tag} className="bg-slate-100 text-slate-600 text-xs font-semibold px-2.5 py-1 rounded-full">
                       {tag}
                     </span>
                   ))}
                 </div>
 
-                {/* CTA */}
                 <a
                   href="#about"
-                  className={`flex items-center justify-center gap-2 ${color.btn} text-white font-bold text-sm px-5 py-3 rounded-2xl shadow-lg transition-all hover:scale-105 active:scale-95`}
+                  className="flex items-center justify-between w-full text-slate-900 font-bold text-sm border-t border-slate-100 pt-4 group/link hover:text-blue-700 transition-colors"
                 >
                   {studio.cta}
-                  <svg className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
                 </a>
               </div>
-            );
-          })}
-        </div>
-
-        {/* Bottom trust bar */}
-        <div className="mt-16 flex flex-wrap items-center justify-center gap-8 text-slate-400 text-sm">
-          {[
-            { icon: "📹", text: "Caméras Sony 4K" },
-            { icon: "🎚️", text: "Mixage professionnel" },
-            { icon: "🌐", text: "Streamable en direct" },
-            { icon: "📦", text: "Fichiers livrés sur place" },
-          ].map(({ icon, text }) => (
-            <div key={text} className="flex items-center gap-2">
-              <span>{icon}</span>
-              <span className="font-medium">{text}</span>
             </div>
           ))}
+        </div>
+
+        {/* Gear section */}
+        <div className="mt-24">
+          <div className="mb-10">
+            <h3 className="text-2xl font-black text-slate-900 mb-2">{t.services.gearTitle}</h3>
+            <p className="text-slate-500 text-sm">{t.services.gearSubtitle}</p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            {t.services.gear.map((item) => (
+              <div key={item.label} className="group relative rounded-2xl overflow-hidden bg-slate-900">
+                <div className="relative h-48">
+                  <Image
+                    src={`/${item.image}`}
+                    alt={item.label}
+                    fill
+                    className="object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/20 to-transparent" />
+                </div>
+                <div className="absolute bottom-0 left-0 right-0 p-5">
+                  <p className="text-white font-bold text-sm leading-tight">{item.label}</p>
+                  <p className="text-white/60 text-xs mt-1">{item.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

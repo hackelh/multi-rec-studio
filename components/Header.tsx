@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { useLang } from "@/contexts/LanguageContext";
 
 export default function Header() {
@@ -9,7 +10,7 @@ export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 30);
+    const handler = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", handler);
     return () => window.removeEventListener("scroll", handler);
   }, []);
@@ -25,7 +26,7 @@ export default function Header() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-white/95 backdrop-blur-md shadow-lg"
+          ? "bg-white/96 backdrop-blur-md shadow-sm border-b border-slate-100"
           : "bg-transparent"
       }`}
     >
@@ -33,22 +34,21 @@ export default function Header() {
         <div className="flex items-center justify-between h-16 lg:h-20">
 
           {/* Logo */}
-          <a href="#home" className="flex items-center gap-2.5 group">
-            <div className="w-9 h-9 bg-gradient-to-br from-blue-600 to-blue-900 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
-              <span className="text-white font-black text-sm">M</span>
-            </div>
-            <div className="flex flex-col leading-none">
-              <span className={`font-black text-base transition-colors ${scrolled ? "text-slate-900" : "text-white"}`}>
-                Multi Rec
-              </span>
-              <span className={`text-xs font-medium transition-colors ${scrolled ? "text-blue-600" : "text-blue-300"}`}>
-                Studio
-              </span>
+          <a href="#home" className="flex items-center">
+            <div className={`transition-all duration-300 ${scrolled ? "bg-transparent" : "bg-white/10 backdrop-blur-sm rounded-xl px-1 py-1"}`}>
+              <Image
+                src="/Logo.png"
+                alt="Multi Rec Studio"
+                width={scrolled ? 130 : 110}
+                height={scrolled ? 52 : 44}
+                className="object-contain h-10 lg:h-12 w-auto transition-all duration-300"
+                priority
+              />
             </div>
           </a>
 
           {/* Desktop nav */}
-          <nav className="hidden lg:flex items-center gap-7">
+          <nav className="hidden lg:flex items-center gap-8">
             {navLinks.map((link) => (
               <a
                 key={link.href}
@@ -62,9 +62,9 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* Right side */}
-          <div className="flex items-center gap-2.5">
-            {/* Language toggle */}
+          {/* Right */}
+          <div className="flex items-center gap-3">
+            {/* Lang toggle */}
             <button
               onClick={() => setLang(lang === "fr" ? "en" : "fr")}
               className={`text-xs font-bold px-3 py-1.5 rounded-full border transition-all hover:scale-105 ${
@@ -76,12 +76,12 @@ export default function Header() {
               {lang === "fr" ? "EN" : "FR"}
             </button>
 
-            {/* CTA button */}
+            {/* CTA */}
             <a
               href="#about"
-              className="hidden sm:flex items-center gap-1.5 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white text-sm font-bold px-4 py-2.5 rounded-full transition-all shadow-lg hover:shadow-orange-500/40 hover:scale-105 active:scale-95"
+              className="hidden sm:flex items-center gap-2 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white text-sm font-bold px-5 py-2.5 rounded-full transition-all shadow-lg hover:shadow-red-700/30 hover:scale-105 active:scale-95"
             >
-              <span className="text-base">🎙️</span>
+              <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
               {t.nav.book}
             </a>
 
@@ -93,21 +93,9 @@ export default function Header() {
                 scrolled ? "hover:bg-slate-100" : "hover:bg-white/10"
               }`}
             >
-              <span
-                className={`w-5 h-0.5 transition-all duration-300 ${
-                  mobileOpen ? "rotate-45 translate-y-2" : ""
-                } ${scrolled ? "bg-slate-800" : "bg-white"}`}
-              />
-              <span
-                className={`w-5 h-0.5 transition-all duration-300 ${
-                  mobileOpen ? "opacity-0" : ""
-                } ${scrolled ? "bg-slate-800" : "bg-white"}`}
-              />
-              <span
-                className={`w-5 h-0.5 transition-all duration-300 ${
-                  mobileOpen ? "-rotate-45 -translate-y-2" : ""
-                } ${scrolled ? "bg-slate-800" : "bg-white"}`}
-              />
+              <span className={`w-5 h-0.5 transition-all duration-300 ${mobileOpen ? "rotate-45 translate-y-2" : ""} ${scrolled ? "bg-slate-800" : "bg-white"}`} />
+              <span className={`w-5 h-0.5 transition-all duration-300 ${mobileOpen ? "opacity-0" : ""} ${scrolled ? "bg-slate-800" : "bg-white"}`} />
+              <span className={`w-5 h-0.5 transition-all duration-300 ${mobileOpen ? "-rotate-45 -translate-y-2" : ""} ${scrolled ? "bg-slate-800" : "bg-white"}`} />
             </button>
           </div>
         </div>
@@ -134,9 +122,10 @@ export default function Header() {
             <a
               href="#about"
               onClick={() => setMobileOpen(false)}
-              className="flex items-center justify-center gap-2 bg-gradient-to-r from-orange-500 to-red-500 text-white font-bold px-4 py-3 rounded-full"
+              className="flex items-center justify-center gap-2 bg-gradient-to-r from-red-600 to-red-700 text-white font-bold px-4 py-3 rounded-full"
             >
-              🎙️ {t.nav.book}
+              <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
+              {t.nav.book}
             </a>
           </div>
         </div>

@@ -8,7 +8,7 @@ export default function FloatingCTA() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const handler = () => setVisible(window.scrollY > 600);
+    const handler = () => setVisible(window.scrollY > 700);
     window.addEventListener("scroll", handler);
     return () => window.removeEventListener("scroll", handler);
   }, []);
@@ -21,9 +21,9 @@ export default function FloatingCTA() {
     >
       <a
         href="#about"
-        className="flex items-center gap-2 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-400 hover:to-red-400 text-white font-bold px-5 py-3.5 rounded-full shadow-2xl shadow-orange-900/40 hover:scale-105 active:scale-95 transition-all text-sm"
+        className="flex items-center gap-2.5 bg-slate-900 hover:bg-slate-800 text-white font-bold px-5 py-3.5 rounded-full shadow-2xl hover:scale-105 active:scale-95 transition-all text-sm border border-white/10"
       >
-        <span className="text-lg">🎙️</span>
+        <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
         {t.nav.book}
       </a>
     </div>
