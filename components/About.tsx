@@ -28,9 +28,18 @@ export default function About() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("sending");
-    await new Promise((r) => setTimeout(r, 1400));
-    setStatus("success");
-    setForm(emptyForm);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      if (!res.ok) throw new Error("send failed");
+      setStatus("success");
+      setForm(emptyForm);
+    } catch {
+      setStatus("error");
+    }
   };
 
   const inputClass =
@@ -153,6 +162,11 @@ export default function About() {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
+                {status === "error" && (
+                  <p className="text-red-600 text-sm font-semibold bg-red-50 border border-red-100 rounded-xl px-4 py-3">
+                    {c.error}
+                  </p>
+                )}
                 <div className="grid grid-cols-2 gap-4">
                   <div className="col-span-2 sm:col-span-1">
                     <label className="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wide">{c.name}</label>

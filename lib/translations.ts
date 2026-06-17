@@ -10,7 +10,7 @@ export const translations = {
       book: "Réserver",
     },
     hero: {
-      badge: "Studio podcast · Laval, QC · Ouvert 7j/7",
+      badge: "Studio podcast · Laval, QC · Ouvert 7j/7 · 10h–22h",
       title1: "T'arrives. T'enregistres.",
       title2: "Tu repars prêt à diffuser.",
       subtitle:
@@ -199,7 +199,7 @@ export const translations = {
       book: "Book Now",
     },
     hero: {
-      badge: "Podcast studio · Laval, QC · Open 7 days",
+      badge: "Podcast studio · Laval, QC · Open 7 days · 10AM–10PM",
       title1: "Show up. Hit record.",
       title2: "Walk out ready to post.",
       subtitle:

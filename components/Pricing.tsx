@@ -2,70 +2,37 @@
 
 import { useLang } from "@/contexts/LanguageContext";
 
-const DAYS_FR = ["L", "M", "M", "J", "V", "S", "D"];
-const DAYS_EN = ["M", "T", "W", "T", "F", "S", "S"];
-
-const CALENDAR: (boolean | "taken")[] = [
-  false, false, true, true, "taken", false, false,
-  true, "taken", true, false, true, true, false,
-  false, true, false, true, true, false, false,
-  true, true, false, "taken", false, true, false,
-];
-
 function CalendarWidget({ lang }: { lang: string }) {
-  const days = lang === "fr" ? DAYS_FR : DAYS_EN;
+  const calendlyUrl = process.env.NEXT_PUBLIC_CALENDLY_URL;
+
+  if (!calendlyUrl) {
+    return (
+      <div className="bg-white border border-slate-200 rounded-2xl p-6 flex flex-col items-center justify-center text-center min-h-[320px]">
+        <p className="font-black text-slate-900 text-sm mb-2">
+          {lang === "fr" ? "Réservation en ligne — bientôt disponible" : "Online booking — coming soon"}
+        </p>
+        <p className="text-slate-400 text-xs mb-5 max-w-xs">
+          {lang === "fr"
+            ? "Pour réserver un créneau dès maintenant, écris-nous directement."
+            : "To book a slot right now, write to us directly."}
+        </p>
+        <a
+          href="#about"
+          className="w-full flex items-center justify-center gap-2 bg-slate-900 hover:bg-blue-800 text-white font-bold py-3 rounded-xl text-sm transition-all hover:scale-[1.02]"
+        >
+          {lang === "fr" ? "Nous écrire →" : "Write to us →"}
+        </a>
+      </div>
+    );
+  }
 
   return (
-    <div className="bg-white border border-slate-200 rounded-2xl p-6">
-      <div className="flex items-center justify-between mb-4">
-        <div>
-          <p className="font-black text-slate-900 text-sm">{lang === "fr" ? "Juin 2026" : "June 2026"}</p>
-          <p className="text-slate-400 text-xs mt-0.5">Multi Rec Studio · Laval</p>
-        </div>
-        <div className="flex gap-4 text-xs text-slate-400">
-          <span className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-sm bg-blue-100 border border-blue-300" />
-            {lang === "fr" ? "Disponible" : "Available"}
-          </span>
-          <span className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-sm bg-slate-100 border border-slate-200" />
-            {lang === "fr" ? "Complet" : "Taken"}
-          </span>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-7 gap-1 mb-2">
-        {days.map((d, i) => (
-          <div key={i} className="text-center text-xs font-bold text-slate-300 py-1">{d}</div>
-        ))}
-      </div>
-
-      <div className="grid grid-cols-7 gap-1">
-        {CALENDAR.map((slot, i) => {
-          const day = i + 1;
-          return (
-            <button
-              key={i}
-              disabled={!slot || slot === "taken"}
-              className={`
-                aspect-square rounded-lg text-xs font-semibold transition-all
-                ${slot === true ? "bg-blue-50 text-blue-700 hover:bg-blue-600 hover:text-white cursor-pointer" : ""}
-                ${slot === "taken" ? "bg-slate-50 text-slate-300 cursor-not-allowed line-through" : ""}
-                ${slot === false ? "text-slate-200 cursor-not-allowed" : ""}
-              `}
-            >
-              {day}
-            </button>
-          );
-        })}
-      </div>
-
-      <a
-        href="#about"
-        className="mt-5 w-full flex items-center justify-center gap-2 bg-slate-900 hover:bg-blue-800 text-white font-bold py-3 rounded-xl text-sm transition-all hover:scale-[1.02]"
-      >
-        {lang === "fr" ? "Réserver un créneau →" : "Book a slot →"}
-      </a>
+    <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden min-h-[320px]">
+      <iframe
+        src={calendlyUrl}
+        title="Calendly"
+        className="w-full h-[500px] border-0"
+      />
     </div>
   );
 }

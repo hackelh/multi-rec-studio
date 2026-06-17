@@ -74,9 +74,13 @@ export default function Footer() {
             <p className="text-slate-400 text-sm leading-relaxed max-w-xs mb-5">
               {t.footer.tagline}
             </p>
-            <div className="flex items-center gap-2 text-slate-500 text-sm">
+            <div className="flex items-center gap-2 text-slate-500 text-sm mb-2">
               <span>📍</span>
               <span>Laval, Québec, Canada</span>
+            </div>
+            <div className="flex items-center gap-2 text-slate-500 text-sm">
+              <span>🕒</span>
+              <span>{lang === "fr" ? "10h – 22h, 7j/7" : "10AM – 10PM, 7 days"}</span>
             </div>
           </div>
 
