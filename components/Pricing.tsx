@@ -3,9 +3,17 @@
 import Link from "next/link";
 import { useLang } from "@/contexts/LanguageContext";
 
+function buildEmbedUrl(base: string, lang: string) {
+  const url = new URL(base);
+  url.searchParams.set("embed_type", "Inline");
+  url.searchParams.set("locale", lang === "fr" ? "fr" : "en");
+  return url.toString();
+}
+
 function CalendarCard() {
-  const { t } = useLang();
-  const calendlyUrl = process.env.NEXT_PUBLIC_CALENDLY_URL;
+  const { t, lang } = useLang();
+  const rawUrl = process.env.NEXT_PUBLIC_CALENDLY_URL;
+  const calendlyUrl = rawUrl ? buildEmbedUrl(rawUrl, lang) : null;
 
   if (!calendlyUrl) {
     return (

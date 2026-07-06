@@ -20,7 +20,7 @@ export default function Header() {
     { href: "#home", label: t.nav.home },
     { href: "#services", label: t.nav.services },
     { href: "#pricing", label: t.nav.pricing },
-    { href: "#about", label: t.nav.about },
+    { href: "#contact", label: t.nav.contact },
   ];
 
   return (

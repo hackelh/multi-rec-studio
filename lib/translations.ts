@@ -7,6 +7,7 @@ export const translations = {
       pricing: "Tarifs",
       services: "Nos Studios",
       about: "À Propos",
+      contact: "Contact",
       book: "Réserver",
     },
     hero: {
@@ -213,6 +214,7 @@ export const translations = {
       pricing: "Pricing",
       services: "Studios",
       about: "About",
+      contact: "Contact",
       book: "Book Now",
     },
     hero: {
