@@ -3,10 +3,13 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useLang } from "@/contexts/LanguageContext";
 
 export default function Header() {
   const { lang, setLang, t } = useLang();
+  const pathname = usePathname();
+  const isHome = pathname === "/";
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -16,17 +19,19 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handler);
   }, []);
 
+  const solid = scrolled || !isHome;
+
   const navLinks = [
-    { href: "#home", label: t.nav.home },
-    { href: "#services", label: t.nav.services },
-    { href: "#pricing", label: t.nav.pricing },
-    { href: "#contact", label: t.nav.contact },
+    { href: isHome ? "#home" : "/#home", label: t.nav.home },
+    { href: isHome ? "#services" : "/#services", label: t.nav.services },
+    { href: isHome ? "#pricing" : "/#pricing", label: t.nav.pricing },
+    { href: isHome ? "#contact" : "/#contact", label: t.nav.contact },
   ];
 
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
+        solid
           ? "bg-white/96 backdrop-blur-md shadow-sm border-b border-slate-100"
           : "bg-transparent"
       }`}
@@ -35,18 +40,18 @@ export default function Header() {
         <div className="flex items-center justify-between h-16 lg:h-20">
 
           {/* Logo */}
-          <a href="#home" className="flex items-center">
-            <div className={`transition-all duration-300 ${scrolled ? "bg-transparent" : "bg-white/10 backdrop-blur-sm rounded-xl px-1 py-1"}`}>
+          <Link href="/" className="flex items-center">
+            <div className={`transition-all duration-300 ${solid ? "bg-transparent" : "bg-white/10 backdrop-blur-sm rounded-xl px-1 py-1"}`}>
               <Image
                 src="/Logo.png"
                 alt="Multi Rec Studio"
-                width={scrolled ? 130 : 110}
-                height={scrolled ? 52 : 44}
+                width={solid ? 130 : 110}
+                height={solid ? 52 : 44}
                 className="object-contain h-10 lg:h-12 w-auto transition-all duration-300"
                 priority
               />
             </div>
-          </a>
+          </Link>
 
           {/* Desktop nav */}
           <nav className="hidden lg:flex items-center gap-8">
@@ -55,7 +60,7 @@ export default function Header() {
                 key={link.href}
                 href={link.href}
                 className={`text-sm font-medium transition-colors hover:text-blue-500 ${
-                  scrolled ? "text-slate-700" : "text-white/90"
+                  solid ? "text-slate-700" : "text-white/90"
                 }`}
               >
                 {link.label}
@@ -69,7 +74,7 @@ export default function Header() {
             <button
               onClick={() => setLang(lang === "fr" ? "en" : "fr")}
               className={`text-xs font-bold px-3 py-1.5 rounded-full border transition-all hover:scale-105 ${
-                scrolled
+                solid
                   ? "border-slate-200 text-slate-600 hover:border-blue-500 hover:text-blue-600"
                   : "border-white/40 text-white hover:border-white hover:bg-white/10"
               }`}
@@ -91,12 +96,12 @@ export default function Header() {
               onClick={() => setMobileOpen(!mobileOpen)}
               aria-label="Menu"
               className={`lg:hidden flex flex-col justify-center items-center w-9 h-9 gap-1.5 rounded-lg transition-colors ${
-                scrolled ? "hover:bg-slate-100" : "hover:bg-white/10"
+                solid ? "hover:bg-slate-100" : "hover:bg-white/10"
               }`}
             >
-              <span className={`w-5 h-0.5 transition-all duration-300 ${mobileOpen ? "rotate-45 translate-y-2" : ""} ${scrolled ? "bg-slate-800" : "bg-white"}`} />
-              <span className={`w-5 h-0.5 transition-all duration-300 ${mobileOpen ? "opacity-0" : ""} ${scrolled ? "bg-slate-800" : "bg-white"}`} />
-              <span className={`w-5 h-0.5 transition-all duration-300 ${mobileOpen ? "-rotate-45 -translate-y-2" : ""} ${scrolled ? "bg-slate-800" : "bg-white"}`} />
+              <span className={`w-5 h-0.5 transition-all duration-300 ${mobileOpen ? "rotate-45 translate-y-2" : ""} ${solid ? "bg-slate-800" : "bg-white"}`} />
+              <span className={`w-5 h-0.5 transition-all duration-300 ${mobileOpen ? "opacity-0" : ""} ${solid ? "bg-slate-800" : "bg-white"}`} />
+              <span className={`w-5 h-0.5 transition-all duration-300 ${mobileOpen ? "-rotate-45 -translate-y-2" : ""} ${solid ? "bg-slate-800" : "bg-white"}`} />
             </button>
           </div>
         </div>
