@@ -142,7 +142,7 @@ export function clientConfirmationEmail(data: BookingData): { subject: string; h
 
       <p style="font-size:14px;font-weight:700;color:#0f172a;margin:0 0 8px">Ce qu'il faut apporter</p>
       <p style="font-size:13px;color:#64748b;margin:0 0 20px;line-height:1.7">
-        Rien. Présentez-vous simplement à l'heure prévue — tout le matériel est sur place.<br>
+        Rien. Présentez-vous simplement à l'heure prévue. Tout le matériel est sur place.<br>
         Stationnement gratuit disponible.
       </p>
 

@@ -55,7 +55,7 @@ export default function Pricing() {
           </p>
         </div>
 
-        {/* Pricing cards — full width, 3 equal columns */}
+        {/* Pricing cards - full width, 3 equal columns */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
           {t.pricing.plans.map((plan) => (
             <div

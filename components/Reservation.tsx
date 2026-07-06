@@ -90,7 +90,7 @@ export default function Reservation() {
         ) : (
           <>
             <div className="flex items-center justify-between mb-3">
-              <p className="font-black text-slate-900 text-sm">{r.step2} — {selectedStudio?.name}</p>
+              <p className="font-black text-slate-900 text-sm">{r.step2} · {selectedStudio?.name}</p>
               <button
                 onClick={() => setSelected(null)}
                 className="text-slate-400 hover:text-slate-700 text-xs underline underline-offset-4"
