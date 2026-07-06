@@ -4,10 +4,9 @@ import Link from "next/link";
 import { useLang } from "@/contexts/LanguageContext";
 
 function buildEmbedUrl(base: string, lang: string) {
-  const url = new URL(base);
-  url.searchParams.set("embed_type", "Inline");
-  url.searchParams.set("locale", lang === "fr" ? "fr" : "en");
-  return url.toString();
+  const trimmed = base.trim();
+  const sep = trimmed.includes("?") ? "&" : "?";
+  return `${trimmed}${sep}embed_type=Inline&locale=${lang === "fr" ? "fr" : "en"}`;
 }
 
 function CalendarCard() {

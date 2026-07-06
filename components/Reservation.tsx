@@ -12,10 +12,9 @@ const CALENDLY_URLS: Record<string, string | undefined> = {
 };
 
 function buildCalendlyUrl(base: string, lang: string) {
-  const url = new URL(base);
-  url.searchParams.set("locale", lang === "fr" ? "fr" : "en");
-  url.searchParams.set("embed_type", "Inline");
-  return url.toString();
+  const trimmed = base.trim();
+  const sep = trimmed.includes("?") ? "&" : "?";
+  return `${trimmed}${sep}embed_type=Inline&locale=${lang === "fr" ? "fr" : "en"}`;
 }
 
 export default function Reservation() {
