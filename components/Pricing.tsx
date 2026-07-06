@@ -1,40 +1,101 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useLang } from "@/contexts/LanguageContext";
 
-function buildEmbedUrl(base: string, lang: string) {
-  const trimmed = base.trim();
-  const sep = trimmed.includes("?") ? "&" : "?";
-  return `${trimmed}${sep}embed_type=Inline&locale=${lang === "fr" ? "fr" : "en"}`;
-}
-
-function CalendarCard() {
+function MiniCalendar() {
   const { t, lang } = useLang();
-  const rawUrl = process.env.NEXT_PUBLIC_CALENDLY_URL;
-  const calendlyUrl = rawUrl ? buildEmbedUrl(rawUrl, lang) : null;
+  const [bookedDates, setBookedDates] = useState<Set<string>>(new Set());
+  const [loading, setLoading] = useState(true);
 
-  if (!calendlyUrl) {
-    return (
-      <div className="bg-white border border-slate-200 rounded-2xl p-6 flex flex-col items-center justify-center text-center min-h-[320px]">
-        <p className="font-black text-slate-900 text-sm mb-2">{t.pricing.calendlyTitle}</p>
-        <p className="text-slate-400 text-xs mb-5 max-w-xs">{t.pricing.calendlySubtitle}</p>
-        <Link
-          href="/reservation"
-          className="w-full flex items-center justify-center gap-2 bg-slate-900 hover:bg-blue-800 text-white font-bold py-3 rounded-xl text-sm transition-all hover:scale-[1.02]"
-        >
-          {t.pricing.calendlyBtn}
-        </Link>
-      </div>
-    );
-  }
+  useEffect(() => {
+    fetch("/api/availability")
+      .then((r) => r.json())
+      .then((d) => {
+        setBookedDates(new Set(d.bookedDates ?? []));
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, []);
+
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = today.getMonth();
+  const firstDay = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const startOffset = firstDay === 0 ? 6 : firstDay - 1;
+
+  const monthName = new Date(year, month).toLocaleDateString(lang === "fr" ? "fr-CA" : "en-CA", {
+    month: "long",
+    year: "numeric",
+  });
+
+  const dayHeaders = lang === "fr"
+    ? ["Lu", "Ma", "Me", "Je", "Ve", "Sa", "Di"]
+    : ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
+
+  const cells: (number | null)[] = [
+    ...Array(startOffset).fill(null),
+    ...Array.from({ length: daysInMonth }, (_, i) => i + 1),
+  ];
 
   return (
-    <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden flex flex-col">
-      <iframe src={calendlyUrl} title="Calendly" className="w-full h-[420px] border-0" />
+    <div className="bg-white border border-slate-200 rounded-2xl p-6 flex flex-col h-full">
+      <div className="flex items-center justify-between mb-4">
+        <p className="font-black text-slate-900 text-sm capitalize">{monthName}</p>
+        <div className="flex items-center gap-3 text-xs text-slate-400">
+          <span className="flex items-center gap-1.5">
+            <span className="w-2.5 h-2.5 rounded-sm bg-red-100 border border-red-300 inline-block" />
+            {lang === "fr" ? "Réservé" : "Booked"}
+          </span>
+          <span className="flex items-center gap-1.5">
+            <span className="w-2.5 h-2.5 rounded-sm bg-slate-100 inline-block" />
+            {lang === "fr" ? "Dispo" : "Free"}
+          </span>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-7 gap-1 mb-2">
+        {dayHeaders.map((d) => (
+          <div key={d} className="text-center text-xs font-bold text-slate-400">{d}</div>
+        ))}
+      </div>
+
+      <div className="grid grid-cols-7 gap-1 flex-1">
+        {cells.map((day, i) => {
+          if (!day) return <div key={i} />;
+          const dateStr = `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+          const isPast = new Date(year, month, day) < new Date(today.getFullYear(), today.getMonth(), today.getDate());
+          const isBooked = bookedDates.has(dateStr);
+          const isToday = day === today.getDate();
+
+          return (
+            <div
+              key={i}
+              className={`aspect-square flex items-center justify-center rounded-md text-xs font-medium transition-all ${
+                isPast
+                  ? "text-slate-200"
+                  : isBooked
+                  ? "bg-red-50 text-red-400 border border-red-200"
+                  : isToday
+                  ? "bg-blue-600 text-white font-black"
+                  : "bg-slate-50 text-slate-700 hover:bg-slate-100"
+              }`}
+            >
+              {loading && !isPast ? (
+                <span className="w-3 h-3 rounded-full bg-slate-200 animate-pulse" />
+              ) : (
+                day
+              )}
+            </div>
+          );
+        })}
+      </div>
+
       <Link
         href="/reservation"
-        className="m-4 mt-0 flex items-center justify-center gap-2 bg-slate-900 hover:bg-blue-800 text-white font-bold py-3 rounded-xl text-sm transition-all hover:scale-[1.02]"
+        className="mt-5 flex items-center justify-center gap-2 bg-slate-900 hover:bg-blue-800 text-white font-bold py-3 rounded-xl text-sm transition-all hover:scale-[1.02]"
       >
         {t.pricing.calendlyBtn}
       </Link>
@@ -169,7 +230,7 @@ export default function Pricing() {
           </div>
 
           {/* Calendar */}
-          <CalendarCard />
+          <MiniCalendar />
         </div>
 
         {/* Note */}
