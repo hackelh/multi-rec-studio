@@ -64,11 +64,11 @@ export default function Footer() {
           <div className="lg:col-span-2">
             <a href="#home" className="inline-block mb-4">
               <Image
-                src="/Logo.png"
+                src="/Logo-white.png"
                 alt="Multi Rec Studio"
                 width={130}
                 height={52}
-                className="object-contain brightness-0 invert"
+                className="object-contain w-[130px] h-[52px]"
               />
             </a>
             <p className="text-slate-400 text-sm leading-relaxed max-w-xs mb-5">
@@ -102,11 +102,11 @@ export default function Footer() {
           <div>
             <p className="font-bold text-white text-xs mb-5 uppercase tracking-widest">{t.footer.contactTitle}</p>
             <div className="space-y-3 mb-7">
-              <a href="mailto:contact@multirec.studio" className="flex items-center gap-2.5 text-slate-400 hover:text-white text-sm transition-colors">
+              <a href="mailto:multirecstudio1@gmail.com" className="flex items-center gap-2.5 text-slate-400 hover:text-white text-sm transition-colors">
                 <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
-                contact@multirec.studio
+                multirecstudio1@gmail.com
               </a>
               <a href="tel:+15140000000" className="flex items-center gap-2.5 text-slate-400 hover:text-white text-sm transition-colors">
                 <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">

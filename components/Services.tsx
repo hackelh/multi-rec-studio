@@ -38,6 +38,7 @@ export default function Services() {
                   src={`/${studio.image}`}
                   alt={studio.name}
                   fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
                   className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                 />
                 {/* Gradient fade to white */}
@@ -73,7 +74,7 @@ export default function Services() {
                 </div>
 
                 <a
-                  href="#about"
+                  href="#contact"
                   className="flex items-center justify-between w-full text-slate-900 font-bold text-sm border-t border-slate-100 pt-4 group/link hover:text-blue-700 transition-colors"
                 >
                   {studio.cta}
@@ -101,6 +102,7 @@ export default function Services() {
                     src={`/${item.image}`}
                     alt={item.label}
                     fill
+                    sizes="(max-width: 640px) 100vw, 33vw"
                     className="object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/20 to-transparent" />

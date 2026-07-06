@@ -59,6 +59,7 @@ export default function About() {
                 src="/4.png"
                 alt="Studio Pro Multi Rec Studio"
                 fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent" />
@@ -67,11 +68,11 @@ export default function About() {
               <div className="absolute bottom-0 left-0 right-0 p-6">
                 <div className="flex items-center gap-2">
                   <Image
-                    src="/Logo.png"
+                    src="/Logo-white.png"
                     alt="Multi Rec Studio"
                     width={90}
                     height={36}
-                    className="object-contain brightness-0 invert"
+                    className="object-contain w-[90px] h-[36px]"
                   />
                 </div>
                 <p className="text-white/70 text-xs mt-1">Laval, Québec</p>
@@ -119,7 +120,7 @@ export default function About() {
         </div>
 
         {/* Bottom: Contact */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+        <div id="contact" className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start scroll-mt-24">
 
           {/* Left: Why contact */}
           <div>
@@ -129,10 +130,10 @@ export default function About() {
             {/* Two gear images side by side */}
             <div className="grid grid-cols-2 gap-4">
               <div className="relative h-44 rounded-2xl overflow-hidden">
-                <Image src="/5.png" alt="Caméra 4K RODE" fill className="object-cover" />
+                <Image src="/5.png" alt="Caméra 4K RODE" fill sizes="(max-width: 1024px) 50vw, 25vw" className="object-cover" />
               </div>
               <div className="relative h-44 rounded-2xl overflow-hidden">
-                <Image src="/2.png" alt="Console de mixage" fill className="object-cover" />
+                <Image src="/2.png" alt="Console de mixage" fill sizes="(max-width: 1024px) 50vw, 25vw" className="object-cover" />
               </div>
             </div>
 

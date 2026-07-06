@@ -1,44 +1,42 @@
 "use client";
 
+import Link from "next/link";
 import { useLang } from "@/contexts/LanguageContext";
 
-function CalendarWidget({ lang }: { lang: string }) {
+function CalendarCard() {
+  const { t } = useLang();
   const calendlyUrl = process.env.NEXT_PUBLIC_CALENDLY_URL;
 
   if (!calendlyUrl) {
     return (
       <div className="bg-white border border-slate-200 rounded-2xl p-6 flex flex-col items-center justify-center text-center min-h-[320px]">
-        <p className="font-black text-slate-900 text-sm mb-2">
-          {lang === "fr" ? "Réservation en ligne — bientôt disponible" : "Online booking — coming soon"}
-        </p>
-        <p className="text-slate-400 text-xs mb-5 max-w-xs">
-          {lang === "fr"
-            ? "Pour réserver un créneau dès maintenant, écris-nous directement."
-            : "To book a slot right now, write to us directly."}
-        </p>
-        <a
-          href="#about"
+        <p className="font-black text-slate-900 text-sm mb-2">{t.pricing.calendlyTitle}</p>
+        <p className="text-slate-400 text-xs mb-5 max-w-xs">{t.pricing.calendlySubtitle}</p>
+        <Link
+          href="/reservation"
           className="w-full flex items-center justify-center gap-2 bg-slate-900 hover:bg-blue-800 text-white font-bold py-3 rounded-xl text-sm transition-all hover:scale-[1.02]"
         >
-          {lang === "fr" ? "Nous écrire →" : "Write to us →"}
-        </a>
+          {t.pricing.calendlyBtn}
+        </Link>
       </div>
     );
   }
 
   return (
-    <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden min-h-[320px]">
-      <iframe
-        src={calendlyUrl}
-        title="Calendly"
-        className="w-full h-[500px] border-0"
-      />
+    <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden flex flex-col">
+      <iframe src={calendlyUrl} title="Calendly" className="w-full h-[420px] border-0" />
+      <Link
+        href="/reservation"
+        className="m-4 mt-0 flex items-center justify-center gap-2 bg-slate-900 hover:bg-blue-800 text-white font-bold py-3 rounded-xl text-sm transition-all hover:scale-[1.02]"
+      >
+        {t.pricing.calendlyBtn}
+      </Link>
     </div>
   );
 }
 
 export default function Pricing() {
-  const { t, lang } = useLang();
+  const { t } = useLang();
 
   return (
     <section id="pricing" className="py-24 bg-slate-50">
@@ -124,7 +122,7 @@ export default function Pricing() {
 
               {/* CTA */}
               <a
-                href="#about"
+                href="#contact"
                 className={`flex items-center justify-center gap-2 font-bold text-sm py-3.5 rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98] ${
                   plan.featured
                     ? "bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-900/40"
@@ -156,7 +154,7 @@ export default function Pricing() {
               </p>
             </div>
             <a
-              href="#about"
+              href="#contact"
               className="mt-8 inline-flex items-center gap-2 bg-white text-slate-900 font-bold text-sm px-6 py-3 rounded-xl hover:bg-blue-50 transition-colors w-fit"
             >
               {t.pricing.contactBtn} →
@@ -164,13 +162,13 @@ export default function Pricing() {
           </div>
 
           {/* Calendar */}
-          <CalendarWidget lang={lang} />
+          <CalendarCard />
         </div>
 
         {/* Note */}
         <p className="text-center text-slate-400 text-sm">
           {t.pricing.note}{" "}
-          <a href="#about" className="text-blue-600 hover:underline font-medium">
+          <a href="#contact" className="text-blue-600 hover:underline font-medium">
             {t.pricing.contactBtn}
           </a>
         </p>

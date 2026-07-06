@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { useLang } from "@/contexts/LanguageContext";
 
 export default function Header() {
@@ -77,13 +78,13 @@ export default function Header() {
             </button>
 
             {/* CTA */}
-            <a
-              href="#about"
+            <Link
+              href="/reservation"
               className="hidden sm:flex items-center gap-2 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white text-sm font-bold px-5 py-2.5 rounded-full transition-all shadow-lg hover:shadow-red-700/30 hover:scale-105 active:scale-95"
             >
               <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
               {t.nav.book}
-            </a>
+            </Link>
 
             {/* Hamburger */}
             <button
@@ -119,14 +120,14 @@ export default function Header() {
             </a>
           ))}
           <div className="pt-3 border-t border-slate-100 mt-3">
-            <a
-              href="#about"
+            <Link
+              href="/reservation"
               onClick={() => setMobileOpen(false)}
               className="flex items-center justify-center gap-2 bg-gradient-to-r from-red-600 to-red-700 text-white font-bold px-4 py-3 rounded-full"
             >
               <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
               {t.nav.book}
-            </a>
+            </Link>
           </div>
         </div>
       </div>

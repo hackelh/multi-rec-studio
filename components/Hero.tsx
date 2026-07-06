@@ -14,6 +14,7 @@ export default function Hero() {
         src="/1.png"
         alt="Multi Rec Studio  vue du studio"
         fill
+        sizes="100vw"
         className="object-cover object-center"
         priority
       />
