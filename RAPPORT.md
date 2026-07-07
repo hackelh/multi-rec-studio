@@ -113,7 +113,47 @@ Le domaine `multirecstudio.com` (acheté sur OVH) est configuré pour pointer ve
 
 ---
 
-## 6. Sécurité
+## 6. Référencement naturel (SEO)
+
+Le site intègre une stratégie SEO complète pour maximiser sa visibilité sur les moteurs de recherche.
+
+### 6.1 Métadonnées
+
+- **Titre dynamique** avec template (`%s | Multi Rec Studio`) pour chaque page
+- **Meta description** optimisée pour l'intent de recherche local
+- **Mots-clés** ciblés : "studio podcast Laval", "studio enregistrement Québec", etc.
+- **URL canonique** déclarée pour éviter le contenu dupliqué
+- **Métadonnées spécifiques** sur `/reservation` (titre et description propres à la page)
+
+### 6.2 Open Graph & réseaux sociaux
+
+- **Image Open Graph** générée dynamiquement (`1200×630 px`) avec le nom du studio, la localisation et les services — s'affiche automatiquement quand un lien est partagé sur WhatsApp, Facebook, LinkedIn, iMessage
+- **Twitter Card** de type `summary_large_image`
+- Locale `fr_CA` déclarée
+
+### 6.3 Indexation
+
+- **`robots.txt`** : autorise l'indexation complète du site et pointe vers le sitemap
+- **`sitemap.xml`** : liste les deux pages (`/` et `/reservation`) avec priorité et fréquence de mise à jour
+
+### 6.4 Données structurées (JSON-LD)
+
+Schema `LocalBusiness` injecté dans le `<head>` de toutes les pages :
+- Nom, description, email, ville, région, pays
+- Coordonnées géographiques (Laval, QC)
+- Horaires d'ouverture : lundi–dimanche, 10h–22h
+- Fourchette de prix
+
+Ces données permettent à Google d'afficher des informations enrichies dans les résultats de recherche (Knowledge Panel, Google Maps).
+
+### 6.5 Icônes et PWA
+
+- **Favicon** : logo sur fond sombre, format PNG 512×512
+- **Apple Touch Icon** : pour l'ajout en raccourci sur iOS
+
+---
+
+## 7. Sécurité
 
 - Les secrets (mot de passe Gmail, token Calendly) sont stockés dans `.env.local`, fichier exclu du dépôt git via `.gitignore`
 - Sur Vercel, les variables d'environnement sont chiffrées et injectées au moment du build/runtime
@@ -122,16 +162,29 @@ Le domaine `multirecstudio.com` (acheté sur OVH) est configuré pour pointer ve
 
 ---
 
-## 7. Points en attente (actions côté client)
+## 8. Déploiement et infrastructure
 
-| Action | Responsable | Statut |
+| Composant | Service | Détail |
 |---|---|---|
-| Ajouter enregistrement A + CNAME dans la Zone DNS OVH | Client | A faire |
-| Mettre à jour les horaires Calendly (10h-22h, 7j/7) | Client | A faire |
-| Renseigner les URLs Calendly par studio dans les variables Vercel | Client | A faire |
+| Hébergement | Vercel | Déploiement continu via GitHub |
+| Domaine | OVH → Vercel | A record : `76.76.21.21` |
+| SSL/HTTPS | Let's Encrypt via Vercel | Automatique |
+| Emails | Gmail SMTP | App Password, Nodemailer |
+| Réservations | Calendly API v2 | 3 event types (1h), webhook actif |
+| URL production | multirecstudio.com | Propagation DNS confirmée |
 
 ---
 
-## 8. Résultat
+## 9. Points en attente (actions côté client)
 
-Le site est fonctionnel en production, bilingue, connecté à un vrai système de réservation avec confirmation automatique par email. La base technique est solide et extensible : ajout de nouveaux studios, nouvelles langues, ou nouvelles sections ne nécessitent que des modifications localisées dans `translations.ts` et `components/`.
+| Action | Responsable | Statut |
+|---|---|---|
+| Mettre à jour les horaires Calendly (10h-22h, 7j/7) | Client | A faire |
+| Changer l'intervalle Calendly de 30 min à 60 min | Client | A faire |
+| Ajouter le CNAME `www` dans la Zone DNS OVH | Client | A faire |
+
+---
+
+## 10. Résultat
+
+Le site est en production sur `multirecstudio.com`, bilingue (FR/EN), connecté à un système de réservation en ligne avec confirmation automatique par email. Le référencement est optimisé avec données structurées, sitemap, OG image et métadonnées complètes. La base technique est solide et extensible : ajout de nouveaux studios, nouvelles langues ou nouvelles sections ne nécessite que des modifications localisées dans `translations.ts` et `components/`.
